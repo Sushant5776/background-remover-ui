@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { saveAs } from 'file-saver';
 
 const ImageUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -25,7 +24,7 @@ const ImageUpload = () => {
     setLoading(true)
     
     try {
-      const response = await axios.post('https://bg-remover-api-djvzob3udq-el.a.run.app/', formData, {
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -34,9 +33,7 @@ const ImageUpload = () => {
       console.log(response)
       const img_url = URL.createObjectURL(response.data)
       setImageURL(img_url)
-      // saveAs(response.data, 'output.png')
       setUploadStatus('Done!')
-      // setUploadStatus(`File uploaded successfully: ${response.data.filename}`);
     } catch (error) {
       setUploadStatus(`File upload failed: ${error.message}`);
     }
